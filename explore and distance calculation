@@ -1,0 +1,62 @@
+#read in data from grouplens 100k as a 2d dictionary
+#create a dictionary of movies
+movies={}
+for x in open('Desktop/ml-100k/u.item'):
+    (id,title,rlsdate)=x.split('|')[0:3]
+    movies[id]=title
+#create a dictionary of ratings with userid as the first key and movie name as the second key
+rate={}
+for x in open('Desktop/ml-100k/u.data'):
+    (userid,itemid,rating,time)=x.split('\t')
+    rate.setdefault(userid,{})
+    rate[userid][movies[itemid]]=float(rating)
+####################################################
+
+#CALCULATE EUCLIDEAN DISTANCE BETWEEN TWO DATA SETS
+#dict is a 2d dictionary 
+#person1 and person2 are user ids in the form of 'id'
+def euclid(dict,person1,person2):
+    c=[]
+    d=[]
+    for movie1 in dict[person1]:
+        for movie2 in dict[person2]:
+            if(movie1==movie2):
+                c.append(dict[person1][movie1])
+                d.append(dict[person2][movie2])
+    a=np.array(c)
+    b=np.array(d)
+    dist = np.linalg.norm(a-b)
+    return dist
+    
+#CALCULATE PEARSON CORRELATION BETWEEN TWO DATA SETS
+#dict is a 2d dictionary
+#person1 and person2 are user ids in the form of 'id'
+from scipy.stats.stats import pearsonr
+def pearson(dict,person1,person2):
+    c=[]
+    d=[]
+    for movie1 in dict[person1]:
+        for movie2 in dict[person2]:
+            if(movie1==movie2):
+                c.append(dict[person1][movie1])
+                d.append(dict[person2][movie2])
+    #only need the correlation value not the p value
+    print pearsonr(c,d)[0]
+    return;
+#######################################################################
+#PLOT WITH TWO USERS AS AXIS AND THEIR RATINGS FOR A MOVIE AS A POINT
+%matplotlib nbagg
+import matplotlib.pyplot as plt
+import numpy as np
+
+x=[]
+y=[]
+#movie1 and movie2 are movie names
+for movie1 in rate['344']:
+    for movie2 in rate['345']:
+        if(movie1==movie2):
+            x.append(rate['344'][movie1])
+            y.append(rate['345'][movie2])         
+plt.plot(x,y,'ro')
+plt.axis([0,6,0,6])
+plt.show()
