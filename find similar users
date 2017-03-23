@@ -1,0 +1,25 @@
+
+#recommend top n similar users based on euclidean distances
+import numpy as np
+def similaruser(dict, person, n):
+    q=[]
+    for id in dict:
+        if(id!=person):
+            q.append((id,float(euclid(dict,person,id))))   
+    q.sort(key=lambda tup:tup[1])
+    top=q[:n]
+    print top
+**********************************
+#recommend top n similar users based on pearson correlation
+import math
+def simiuser(dict,person,n):
+    t=[]
+    for id in dict:
+        if(id!=person):
+            value=float(pearson(dict,person,id))
+            if(math.isnan(value)==False):
+                t.append((id,value))            
+    t.sort(key=lambda tup:tup[1],reverse=True)
+   
+    top=t[:n]
+    print top
