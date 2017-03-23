@@ -9,6 +9,11 @@ def similaruser(dict, person, n):
     q.sort(key=lambda tup:tup[1])
     top=q[:n]
     print top
+    
+************************************
+ex result:
+similaruser(rate,'344',3)
+[('341', 0.0), ('814', 1.0), ('783', 1.4142135623730951)]
 **********************************
 #recommend top n similar users based on pearson correlation
 import math
@@ -23,3 +28,7 @@ def simiuser(dict,person,n):
    
     top=t[:n]
     print top
+
+ex result:
+simiuser(rate,'344',3)
+[('809', 0.8700435032627719), ('444', 0.8589556903873333), ('814', 0.8574929257125443)]
