@@ -1,0 +1,43 @@
+from matplotlib import pyplot as plt
+
+*************************************************
+#plot a figure with two users as axis and each point is the rating by the two users on a single movie
+x=[]
+y=[]
+mvname=[]
+
+#movie1 and movie2 are movie names
+for movie1 in rate['344']:
+    for movie2 in rate['345']:
+        if(movie1==movie2):
+            x.append(rate['344'][movie1])
+            y.append(rate['345'][movie2])
+            mvname.append(movie1)
+fig=plt.figure()
+plt.scatter(x,y)
+plt.axis([0,6,0,6])
+plt.xlabel('user 344')
+plt.ylabel('user 345')
+for i,txt in enumerate(mvname):
+        plt.annotate(txt,(x[i],y[i]))
+plt.savefig('fig8')
+*********************************************
+#Plot a figure with two movies as axis and each point is the rating by a user for the two movies
+a=[]
+b=[]
+username=[]
+for user1 in mvrate[movies['340']]:
+    for user2 in mvrate[movies['345']]:
+        if(user1==user2):
+            a.append(mvrate[movies['340']][user1])
+            b.append(mvrate[movies['345']][user2])
+            username.append(user1)
+
+fig=plt.figure()
+plt.scatter(a,b)
+plt.axis([0,6,0,6])
+plt.xlabel(movies['340'])
+plt.ylabel(movies['345'])
+for i,txt in enumerate(username):
+        plt.annotate(txt,(a[i],b[i]))
+plt.savefig('fig7')
