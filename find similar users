@@ -1,4 +1,15 @@
-
+#where the method parameter is a pearson or euclid as defined in the other file
+def simiuser(dict,person,n,method):
+    t=[]
+    for id in dict:
+        if(id!=person):
+            value=float(method(dict,person,id))
+            t.append((id,value))   
+            
+    t.sort(key=lambda tup:tup[1],reverse=True)  
+    top=t[:n]
+    print top
+    
 #recommend top n similar users based on euclidean distances
 import numpy as np
 def similaruser(dict, person, n):
