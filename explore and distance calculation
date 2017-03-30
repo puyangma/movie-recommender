@@ -33,18 +33,27 @@ def euclid(dict,person1,person2):
 #CALCULATE PEARSON CORRELATION BETWEEN TWO DATA SETS
 #dict is a 2d dictionary
 #person1 and person2 are user ids in the form of 'id'
-from scipy.stats.stats import pearsonr
+import math
 def pearson(dict,person1,person2):
     c=[]
     d=[]
+    x=[]
+    y=[]
     for movie1 in dict[person1]:
         for movie2 in dict[person2]:
             if(movie1==movie2):
                 c.append(dict[person1][movie1])
                 d.append(dict[person2][movie2])
-    #only need the correlation value not the p value
-    print pearsonr(c,d)[0]
-    return;
+    cmean=sum(c)/len(c)
+    dmean=sum(d)/len(d)
+    x=numpy.array(c)-cmean
+    y=numpy.array(d)-dmean
+    denom=math.sqrt(sum(numpy.array(x)**2)*sum(numpy.array(y)**2))
+    num=sum(x*y)
+    #if one of the variance is zero, then there is no correlation 
+    if(denom==0):
+        return 0
+    return float(num/denom)
 #######################################################################
 #PLOT WITH TWO USERS AS AXIS AND THEIR RATINGS FOR A MOVIE AS A POINT
 %matplotlib nbagg
