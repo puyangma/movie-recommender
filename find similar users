@@ -9,37 +9,44 @@ def simiuser(dict,person,n,method):
     t.sort(key=lambda tup:tup[1],reverse=True)  
     top=t[:n]
     print top
-    
-#recommend top n similar users based on euclidean distances
-import numpy as np
-def similaruser(dict, person, n):
-    q=[]
-    for id in dict:
-        if(id!=person):
-            q.append((id,float(euclid(dict,person,id))))   
-    q.sort(key=lambda tup:tup[1])
-    top=q[:n]
-    print top
-    
-************************************
-ex result:
-similaruser(rate,'344',3)
-[('341', 0.0), ('814', 1.0), ('783', 1.4142135623730951)]
-**********************************
-#recommend top n similar users based on pearson correlation
+##################################################    
+#CALCULATE EUCLIDEAN DISTANCE BETWEEN TWO DATA SETS
+#dict is a 2d dictionary 
+#person1 and person2 are user ids in the form of 'id'
+def euclid(dict,person1,person2):
+    c=[]
+    d=[]
+    for movie1 in dict[person1]:
+        for movie2 in dict[person2]:
+            if(movie1==movie2):
+                c.append(dict[person1][movie1])
+                d.append(dict[person2][movie2])
+    a=np.array(c)
+    b=np.array(d)
+    dist = np.linalg.norm(a-b)
+    return dist
+##############################################    
+#CALCULATE PEARSON CORRELATION BETWEEN TWO DATA SETS
+#dict is a 2d dictionary
+#person1 and person2 are user ids in the form of 'id'
 import math
-def simiuser(dict,person,n):
-    t=[]
-    for id in dict:
-        if(id!=person):
-            value=float(pearson(dict,person,id))
-            if(math.isnan(value)==False):
-                t.append((id,value))            
-    t.sort(key=lambda tup:tup[1],reverse=True)
-   
-    top=t[:n]
-    print top
-
-ex result:
-simiuser(rate,'344',3)
-[('809', 0.8700435032627719), ('444', 0.8589556903873333), ('814', 0.8574929257125443)]
+def pearson(dict,person1,person2):
+    c=[]
+    d=[]
+    x=[]
+    y=[]
+    for movie1 in dict[person1]:
+        for movie2 in dict[person2]:
+            if(movie1==movie2):
+                c.append(dict[person1][movie1])
+                d.append(dict[person2][movie2])
+    cmean=sum(c)/len(c)
+    dmean=sum(d)/len(d)
+    x=numpy.array(c)-cmean
+    y=numpy.array(d)-dmean
+    denom=math.sqrt(sum(numpy.array(x)**2)*sum(numpy.array(y)**2))
+    num=sum(x*y)
+    #if one of the variance is zero, then there is no correlation 
+    if(denom==0):
+        return 0
+    return float(num/denom)
