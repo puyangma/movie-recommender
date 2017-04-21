@@ -13,22 +13,12 @@ for x in open('Desktop/ml-100k/u.data'):
     rate.setdefault(userid,{})
     rate[userid][movies[itemid]]=float(rating)
 ####################################################
+mvrate={}
+for x in open('Desktop/ml-100k/u.data'):
+    (userid,itemid,rating,time)=x.split('\t')
+    mvrate.setdefault(userid,{})
+    #some movies are not rated by anyone
+    mvrate.setdefault(movies[itemid],{})
+    mvrate[movies[itemid]][userid]=float(rating)
 
 
-#######################################################################
-#PLOT WITH TWO USERS AS AXIS AND THEIR RATINGS FOR A MOVIE AS A POINT
-%matplotlib nbagg
-import matplotlib.pyplot as plt
-import numpy as np
-
-x=[]
-y=[]
-#movie1 and movie2 are movie names
-for movie1 in rate['344']:
-    for movie2 in rate['345']:
-        if(movie1==movie2):
-            x.append(rate['344'][movie1])
-            y.append(rate['345'][movie2])         
-plt.plot(x,y,'ro')
-plt.axis([0,6,0,6])
-plt.show()
