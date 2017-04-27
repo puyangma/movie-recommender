@@ -1,9 +1,8 @@
 from matplotlib import pyplot as plt
-
+import numpy as np
 *************************************************
 #plot a figure with two users as axis and each point is the rating by the two users on a single movie
-from matplotlib import pyplot as plt
-import numpy as np
+
 x=[]
 y=[]
 mvname=[]
@@ -29,7 +28,7 @@ for i,txt in enumerate(mvname[:6]):
 plt.savefig('fig1')
 *********************************************
 #Plot a figure with two movies as axis and each point is the rating by a user for the two movies
-from matplotlib import pyplot as plt
+
 a=[]
 b=[]
 username=[]
