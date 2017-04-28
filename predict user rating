@@ -41,9 +41,12 @@ def pred(dict,user,method):
         if mv not in dict[user]:
         #a list of users who have rated the mv
             u=mvrate[mv].keys()
+            if(len(u)>5):
+                u=simiuser(dict,user,u,n,method)   #where n is the number of neighbors to use
             for i in u:
                 num=num+(rate[i][mv]*method(dict,user,i))
                 denom=denom+method(dict,user,i)
-            dict[user][mv]=int(num/denom)        
+            dict[user][mv]=int(num/denom)
+     
          
             
