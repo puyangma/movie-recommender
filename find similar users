@@ -9,6 +9,20 @@ def simiuser(dict,person,n,method):
     t.sort(key=lambda tup:tup[1],reverse=True)  
     top=t[:n]
     print top
+    
+##return n most similar users to person from a group    
+def simiuser(dict,person,group,n,method):
+    t=[]
+    for id in group:
+        if(id!=person):
+            value=float(method(dict,person,id))
+            t.append((id,value))   
+            
+    t.sort(key=lambda tup:tup[1],reverse=True)  
+    top=t[:n]
+    import operator
+    top=map(operator.itemgetter(0), top)
+    return top
 ##################################################    
 #CALCULATE EUCLIDEAN DISTANCE BETWEEN TWO DATA SETS
 #dict is a 2d dictionary 
