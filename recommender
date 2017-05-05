@@ -1,0 +1,40 @@
+def neighbor(dict,person,threshold,method):
+    t=[]
+    for id in dict:
+        if(id!=person):
+            value=float(method(dict,person,id))
+            t.append((id,value))   
+            
+    t.sort(key=lambda tup:tup[1],reverse=True)
+    t2=[i for i in t if i[1]>threshold]
+    return t2
+
+
+def similaritydict(dict,threshold):
+    result={}
+    for i in dict:
+        result[i]=neighbor(dict,i,threshold,pearson)
+    return result
+
+dictionary = similaritydict(rate,0.6)
+#dictionary is passed into recommender as a parameter
+
+
+def recommender(dict,user,similaritydict):
+    #a list of (neibor, correlation value) for a user
+    lst=similaritydict[user]
+    #get the list of neibors close to user based on a correlation threshold 
+    nei=[x[0] for x in lst]
+    for i in nei:
+        item = dict[i].keys()
+        for mv in item:
+            if(mv not in dict[user]):
+                dict[user][mv]=[]
+            #get the correlation value between user and i
+            r= [correlation for tup, correlation in lst if tup == i]
+            dict[user][mv].append((dict[i][mv],r))
+                
+        num=sum(x[0]*x[1] for x in dict[user][mv])
+        denom=sum(x[1] for x in dict[user][mv])
+        if(denom !=0):
+            dict[user][mv]=num/denom
