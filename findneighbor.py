@@ -1,3 +1,6 @@
+#!/usr/bin/evn python
+from distance import pearson
+
 #return a tuple list of top n neighbors with their distance metrics
 def simiuser(dict,person,n,distance_method):
     t=[]
