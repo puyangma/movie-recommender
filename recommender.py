@@ -1,3 +1,7 @@
+#!/usr/bin/evn python
+from Datainput import rate, movies
+from distance import pearson
+
 def recommender(dict, user, distance_metric, n):
     #recommend items for the user in the format of (predicted rating, item_name)
     weighted_rating={}
